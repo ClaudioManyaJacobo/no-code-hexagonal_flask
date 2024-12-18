@@ -13,3 +13,8 @@ class MovieRepository(ABC):
     @abstractmethod
     def show(self, movie_id: int) -> Movie:
         pass
+    
+    # Método search_by_genre para buscar películas por género (Methodabstract)
+    @abstractmethod
+    def search_by_genre(self, genre_id: str) -> List[Movie]:
+        pass

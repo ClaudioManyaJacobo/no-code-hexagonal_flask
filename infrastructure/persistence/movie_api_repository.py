@@ -64,7 +64,7 @@ class MovieApiRepository(MovieRepository):
             poster_path=self.get_image_path(data.get('poster_path')),
             backdrop_path=self.get_image_path(data.get('backdrop_path'), is_backdrop=True),
             overview=overview or data.get('overview', 'Descripción no disponible'),
-            genres=[genre['name'] for genre in data.get('genres', [])],
+            genres=[{"id": genre['id'], "name": genre['name']} for genre in data.get('genres', [])],
             runtime=data.get('runtime'),
             tagline=data.get('tagline'),
             platforms=platforms or [],
@@ -85,8 +85,17 @@ class MovieApiRepository(MovieRepository):
     # Obtener películas populares
     def index(self) -> List[Movie]:
         url = f"{self.base_url}?api_key={self.api_key}&language=es-MX"
-        data = self.safe_request(url)
-        return [self.create_movie(item) for item in data['results'][:20]] if data and data['total_results'] > 0 else []
+        all_movies = []
+        
+        # Realizamos 3 solicitudes para obtener un total de 50 películas (3 páginas)
+        for page in range(1, 4):  # Páginas 1, 2 y 3
+            paginated_url = f"{url}&page={page}"
+            data = self.safe_request(paginated_url)
+            if data and data['total_results'] > 0:
+                all_movies.extend([self.create_movie(item) for item in data['results']])
+        
+        # Limitamos a 50 si hay más resultados
+        return all_movies[:50] if all_movies else []
 
     # Mostrar detalles de una película específica
     def show(self, movie_id: int, language='es-MX') -> Movie:
@@ -98,7 +107,22 @@ class MovieApiRepository(MovieRepository):
             overview = self.get_movie_overview(movie_id, language, data)
             return self.create_movie(data, platforms, actors, youtube_url, overview)
         return None
-
+    
+    # Metodo para buscar películas por género
+    def search_by_genre(self, genre_id) -> List[Movie]:
+        url = f"https://api.themoviedb.org/3/discover/movie?api_key={self.api_key}&with_genres={genre_id}&language=es-MX"
+        all_movies = []
+        
+        # Realizamos 3 solicitudes para obtener un total de 50 películas (3 páginas)
+        for page in range(1, 4):  # Páginas 1, 2 y 3
+            paginated_url = f"{url}&page={page}"
+            data = self.safe_request(paginated_url)
+            if data and data['total_results'] > 0:
+                all_movies.extend([self.create_movie(item) for item in data['results']])
+        
+        # Limitamos a 50 si hay más resultados
+        return all_movies[:50] if all_movies else []
+    
     # Obtener la sinopsis de la película
     def get_movie_overview(self, movie_id, language, data):
         overview = data.get('overview')
@@ -137,7 +161,7 @@ class MovieApiRepository(MovieRepository):
     def search(self, title: str) -> List[Movie]:
         url = f"{self.search_url}?api_key={self.api_key}&query={quote(title)}&language=es-ES"
         data = self.safe_request(url)
-        return [self.create_movie(item) for item in data['results'][:10]] if data['total_results'] > 0 else []
+        return [self.create_movie(item) for item in data['results'][:20]] if data['total_results'] > 0 else []
 
     # Obtener los detalles completos de la película
     def fetch_movie_data(self, movie_id, language):

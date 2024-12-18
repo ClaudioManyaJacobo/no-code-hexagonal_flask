@@ -17,3 +17,7 @@ class MovieService:
     # Clase show para mostrar los detalles de una película
     def show(self, movie_id: int) -> Movie:
         return self.repository.show(movie_id)
+    
+    # clase search_by_genre para buscar películas por género
+    def search_by_genre(self, genre_id: str) -> List[Movie]:
+        return self.repository.search_by_genre(genre_id)

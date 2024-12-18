@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Películas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/movie/index.css') }}"> 
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">     
+</head>
+<body>
+    {% include '_gen/nav.html' %}
+
+    <h1>Listado de Películas</h1>
+    
+    <div class="movies-container">
+        {% for movie in movies %}
+            <div class="movie-card">
+                <a href="{{ url_for('show', movie_id=movie.movie_id) }}">
+                    {% if movie.poster_path %}
+                        <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" alt="{{ movie.title }}">
+                    {% else %}
+                        <img src="static/images/no-disponible.jpg" alt="Imagen no disponible">
+                    {% endif %}
+                </a>                
+            </div>
+        {% else %}
+            <p>No se encontraron películas.</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

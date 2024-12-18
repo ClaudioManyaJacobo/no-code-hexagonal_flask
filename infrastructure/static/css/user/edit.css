@@ -1,0 +1,78 @@
+/* Estilos para la barra deslizante */
+.side-nav {
+    height: 100%; /* Abarca toda la altura de la página */
+    width: 0; /* Empieza con un ancho de 0, oculto */
+    position: fixed;
+    z-index: 1000; /* Para que se quede encima de todo */
+    top: 0;
+    right: 0; /* Posición en el lado derecho */
+    background-color: rgba(255, 255, 255, 0.95); /* Fondo blanco con opacidad */
+    overflow-x: hidden; /* No permite desplazamiento horizontal */
+    transition: 0.5s; /* Efecto de transición suave */
+    padding-top: 60px; /* Espacio superior */
+    box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.2); /* Sombra para la barra */
+}
+
+/* Estilo para cerrar la barra deslizante */
+.side-nav .close-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 36px;
+    color: #333;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Cuando el cursor pasa por encima del botón de cierre */
+.side-nav .close-btn:hover {
+    color: #ff4d4d;
+}
+
+/* Estilo del contenido dentro de la barra deslizante */
+.side-nav h1 {
+    text-align: center;
+    color: #333;
+}
+
+input[type="text"], input[type="password"] {
+    width: 80%;
+    padding: 8px;
+    margin: 10px 0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-left: 10%;
+}
+
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 20px;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.open-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-size: 16px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.open-btn:hover {
+    background-color: #45a049;
+}

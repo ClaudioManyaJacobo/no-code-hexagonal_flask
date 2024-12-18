@@ -1,15 +1,24 @@
 from abc import ABC, abstractmethod
-from domain.user.user import User
+from .user import User
 
-# Interfaz que define los métodos que debe implementar un repositorio de usuarios
 class UserRepository(ABC):
-    # Método para obtener un usuario por su ID
+    # Métodos abstractos para la persistencia de usuarios
+    # Metodo para obtener el email del usuario
     @abstractmethod
     def get_user_by_email(self, email: str) -> User:
         pass
     
-    # Método para obtener un usuario por su email
+    # Metodo para crear un usuario
     @abstractmethod
-    def create_user(self, user: User) -> User:
+    def create_user(self, name: str, email: str, password: str) -> User:
         pass
     
+    # Metodo para actualizar un usuario
+    @abstractmethod
+    def update_user(self, user_id: int, name: str, password: str) -> None:
+        pass  
+    
+    # Metodo para obtener un usuario por su ID
+    @abstractmethod
+    def get_user_by_id(self, user_id: int) -> User:
+        pass
