@@ -135,9 +135,7 @@
                 {% for actor in movie.actors %}
                     {% if actor.photo %}
                         <li class="actor">
-                            <a href="{{ actor.profile_url }}" target="_blank">
-                                <img src="{{ actor.photo }}" alt="{{ actor.name }}" class="actor-photo">
-                            </a>
+                            <img src="{{ actor.photo }}" alt="{{ actor.name }}" class="actor-photo">
                             <p class="actor-name">{{ actor.name }}</p>
                         </li>
                     {% endif %}

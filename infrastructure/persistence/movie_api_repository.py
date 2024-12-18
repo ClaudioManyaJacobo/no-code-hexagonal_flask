@@ -13,6 +13,7 @@ class MovieApiRepository(MovieRepository):
         self.details_url = "https://api.themoviedb.org/3/movie"
         self.search_url = "https://api.themoviedb.org/3/search/movie"
         self.providers_url = "https://api.themoviedb.org/3/movie"
+        
         self.platform_file = os.path.join(os.path.dirname(__file__), "platforms.yml")
         self.idioma_file = os.path.join(os.path.dirname(__file__), "idioma.yml")
         self.platform_urls = self.load_yaml(self.platform_file, "platforms")
@@ -81,7 +82,8 @@ class MovieApiRepository(MovieRepository):
     def get_image_path(self, path, is_backdrop=False):
         base_url = "https://image.tmdb.org/t/p/w500" if not is_backdrop else "https://image.tmdb.org/t/p/w1280"
         return f"{base_url}{path}" if path else None
-
+    
+# **********************************************************************************************
     # Obtener películas populares
     def index(self) -> List[Movie]:
         url = f"{self.base_url}?api_key={self.api_key}&language=es-MX"
@@ -123,6 +125,7 @@ class MovieApiRepository(MovieRepository):
         # Limitamos a 50 si hay más resultados
         return all_movies[:50] if all_movies else []
     
+# *****************************************************************************************************************+   
     # Obtener la sinopsis de la película
     def get_movie_overview(self, movie_id, language, data):
         overview = data.get('overview')
