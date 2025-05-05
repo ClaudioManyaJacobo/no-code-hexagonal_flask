@@ -439,3 +439,125 @@ ul.platforms-list li img {
     border-radius: 8px; 
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); 
 }
+
+/* Formulario de comentarios */
+.comment-form {
+    margin-bottom: 20px;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+.comment-form .form-group {
+    margin-bottom: 10px;
+}
+
+.comment-form textarea {
+    width: 97.8%;
+    height: 80px;
+    padding: 12px;
+    font-size: 15px;
+    border-radius: 10px;
+    border: 1px solid #444;
+    background-color: #1e1e1e;
+    color: #fff;
+    resize: vertical;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.comment-form textarea:focus {
+    border-color: #4e9eff;
+    box-shadow: 0 0 5px #4e9eff99;
+    outline: none;
+}
+
+.comment-form button {
+    background: linear-gradient(to right, #4e9eff, #3065ff);
+    border: none;
+    padding: 10px 18px;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.comment-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(78, 158, 255, 0.4);
+}
+
+/* Lista de comentarios */
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Estilo de cada comentario */
+.comment {
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    padding: 14px 18px;
+    border-radius: 10px;
+    color: #ddd;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: slideUp 0.5s ease forwards;
+}
+
+.comment:hover {
+    transform: scale(1.015);
+    box-shadow: 0 4px 10px rgba(78, 158, 255, 0.15);
+}
+
+/* Cabecera del comentario */
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 13px;
+    color: #aaa;
+}
+
+/* Contenido del comentario */
+.comment-body {
+    font-size: 15px;
+    color: #eee;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+/* Botón eliminar */
+.delete-form button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-form button:hover {
+    background-color: #c0392b;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

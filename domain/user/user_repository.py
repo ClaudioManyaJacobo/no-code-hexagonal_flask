@@ -2,7 +2,6 @@ from abc import ABC, abstractmethod
 from .user import User
 
 class UserRepository(ABC):
-    # Métodos abstractos para la persistencia de usuarios
     # Metodo para obtener el email del usuario
     @abstractmethod
     def get_user_by_email(self, email: str) -> User:

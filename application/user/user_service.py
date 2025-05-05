@@ -7,7 +7,6 @@ class UserService:
     def __init__(self, user_repository: UserRepository):
         self.user_repository = user_repository
 
-    # Métodos de servicio para el usuario
     # Método para autenticar un usuario
     def authenticate_user(self, email, password):
         user = self.user_repository.get_user_by_email(email)

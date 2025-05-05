@@ -170,3 +170,4 @@ class MovieApiRepository(MovieRepository):
     def fetch_movie_data(self, movie_id, language):
         url = f"{self.details_url}/{movie_id}?api_key={self.api_key}&language={language}&append_to_response=credits,videos"
         return self.safe_request(url)
+   

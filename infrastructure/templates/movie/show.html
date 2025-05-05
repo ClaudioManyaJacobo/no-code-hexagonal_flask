@@ -147,6 +147,40 @@
     </div>
 
     <div class="card-simple">
+        <h3 style="color: white;"> Comentarios</h3>
+        
+        <!-- Formulario para nuevo comentario -->
+        <form method="POST" class="comment-form">
+            <div class="form-group">
+                <textarea name="comment" class="form-control" placeholder="Escribe tu comentario..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Publicar comentario</button>
+        </form>
+        
+        <!-- Lista de comentarios -->
+        <div class="comments-list">
+            {% for comment in comments %}
+                <div class="comment">
+                    <div class="comment-header">
+                        <small>{{ comment.created_at }}</small>
+                        {% if comment.user_id == session.user_id %}
+                        <form method="POST" action="{{ url_for('delete_comment', comment_id=comment.comment_id) }}" class="delete-form">
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                    <div class="comment-body">
+
+                        {{ comment.content }}
+                    </div>
+                </div>
+            {% else %}
+            <p>No hay comentarios aún. ¡Sé el primero en comentar!</p>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div class="card-simple">
         <p class="card-text">
             Gracias a la API de TMDB por proporcionar datos y recursos de películas. Las imágenes y la información de las películas son propiedad de sus respectivos autores y se utilizan únicamente con fines informativos. Todos los derechos reservados. Para más detalles, visita <a href="https://www.themoviedb.org/" target="_blank">TMDB</a>.
         </p>

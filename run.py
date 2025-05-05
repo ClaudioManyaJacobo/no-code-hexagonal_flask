@@ -14,8 +14,8 @@ def format_number(value):
 
 # Crear la aplicación Flask
 app = Flask(__name__, 
-            template_folder='C:/Users/claud/Downloads/REFACT_PYTHON/infrastructure/templates',
-            static_folder='C:/Users/claud/Downloads/REFACT_PYTHON/infrastructure/static')
+            template_folder='C:/Users/claud/OneDrive/Documentos/GIT HUB CODIGO/no-code-hexagonal_flask/infrastructure/templates',
+            static_folder='C:/Users/claud/OneDrive/Documentos/GIT HUB CODIGO/no-code-hexagonal_flask/infrastructure/static')
 
 # Configuración de la clave secreta para sesiones
 app.secret_key = "mysecretkey_db"

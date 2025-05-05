@@ -1,15 +1,11 @@
-import pymssql
+# infrastructure/persistence/user_api_repository.py
 from domain.user.user import User
 from domain.user.user_repository import UserRepository
+from infrastructure.db.connection import get_connection
 
 class UserApiRepository(UserRepository):
-    def __init__(self, server, user, password, database):
-        self.connection = pymssql.connect(
-            server=server,
-            user=user,
-            password=password,
-            database=database
-        )
+    def __init__(self):
+        self.connection = get_connection()
         self.cursor = self.connection.cursor()
 
     def get_user_by_email(self, email: str) -> User:
