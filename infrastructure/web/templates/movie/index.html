@@ -1,0 +1,34 @@
+{% extends 'gen/nav.html' %}
+
+{% block title %}Películas{% endblock %}
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto px-4 py-6">
+
+  {% if movies %}
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+      {% for movie in movies %}
+        <a href="{{ url_for('movie.show', movie_id=movie.movie_id) }}"
+           class="bg-gray-800 hover:bg-gray-700 rounded-xl overflow-hidden shadow-lg transition duration-200 ring-1 ring-gray-700">
+          {% if movie.poster_path %}
+            <img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}"
+                 alt="{{ movie.title }}"
+                 class="w-full h-72 object-cover">
+          {% else %}
+            <img src="{{ url_for('static', filename='images/no-disponible.jpg') }}"
+                 alt="Imagen no disponible"
+                 class="w-full h-72 object-cover">
+          {% endif %}
+          <div class="p-3 text-white text-sm text-center font-medium">
+            {{ movie.title }}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-center text-gray-400 mt-10">No se encontraron películas.</p>
+  {% endif %}
+</div>
+
+{% endblock %}

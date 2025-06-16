@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Peliculizate{% endblock %}</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+</head>
+<body class="bg-[#0d0d0d] text-white min-h-screen font-sans">
+
+  <!-- Navbar -->
+  <nav class="bg-[#121212] text-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-20">
+      <a href="/" class="flex items-center space-x-2">
+        <span class="text-3xl font-extrabold text-white tracking-wider hover:text-gray-200 transition">Peliculízate</span>
+      </a>
+
+      <!-- Formulario de búsqueda -->
+      <div class="flex-1 mx-6">
+        <form method="GET" action="{{ url_for('movie.index') }}" class="flex flex-wrap gap-2 items-center justify-center">
+          <input type="text" name="title" placeholder="Buscar película..." value="{{ request.args.get('title', '') }}"
+                 class="px-4 py-2 rounded bg-[#1e1e1e] text-white placeholder-gray-400 w-52 focus:outline-none focus:ring-2 focus:ring-gray-600">
+          <input type="text" name="year" placeholder="Año" value="{{ request.args.get('year', '') }}"
+                 class="px-4 py-2 rounded bg-[#1e1e1e] text-white placeholder-gray-400 w-20 focus:outline-none focus:ring-2 focus:ring-gray-600">
+          <input type="text" name="actor_name" placeholder="Buscar por actor..." title="Nombre completo requerido"
+                 value="{{ request.args.get('actor_name', '') }}"
+                 class="px-4 py-2 rounded bg-[#1e1e1e] text-white placeholder-gray-400 w-52 focus:outline-none focus:ring-2 focus:ring-gray-600">
+          <select name="genre_id"
+                  class="px-4 py-2 rounded bg-[#1e1e1e] text-white focus:outline-none focus:ring-2 focus:ring-gray-600">
+            <option value="">Todos los géneros</option>
+            <option value="28" {% if request.args.get('genre_id') == "28" %}selected{% endif %}>Acción</option>
+            <option value="16" {% if request.args.get('genre_id') == "16" %}selected{% endif %}>Animación</option>
+          </select>
+          <button type="submit"
+                  class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded transition-all">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+      </div>
+
+      <!-- Reset -->
+      <form method="GET" action="{{ url_for('movie.index') }}">
+        <button type="submit"
+                class="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded text-sm">
+          <i class="fas fa-times"></i>
+        </button>
+      </form>
+
+      <!-- Perfil -->
+      <div class="ml-6 relative">
+        {% if session.get('username') %}
+        <div class="flex items-center gap-4">
+          <button onclick="openNav()" class="text-white hover:text-gray-300 transition">
+            <i class="fas fa-user mr-2"></i>{{ session['username'] }}
+          </button>
+          <form method="GET" action="{{ url_for('user.logout') }}">
+            <button type="submit"
+                    class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-2 rounded text-sm">
+              <i class="fas fa-sign-out-alt"></i>
+            </button>
+          </form>
+        </div>
+        {% else %}
+        <p class="text-sm text-gray-400">No estás logueado.</p>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sidebar Editar Perfil -->
+  <div id="myNav"
+       class="fixed top-0 right-0 h-full bg-[#1a1a1a] text-white shadow-xl overflow-auto w-0 transition-all duration-300 z-50">
+    <a href="javascript:void(0)" onclick="closeNav()"
+       class="absolute top-4 right-4 text-3xl text-white hover:text-red-500 transition">&times;</a>
+
+    <form method="POST" action="{{ url_for('user.edit') }}" id="sidebarForm"
+          class="opacity-0 transition-opacity duration-300 px-8 py-10 space-y-6">
+      <h2 class="text-2xl font-bold text-white mb-4">Editar Perfil</h2>
+
+      <div>
+        <label for="name" class="block text-sm font-medium text-gray-300">Nombre:</label>
+        <input type="text" id="name" name="name" value="{{ session['username'] }}"
+               class="mt-1 block w-full px-3 py-2 bg-[#2a2a2a] border border-gray-600 rounded-md text-white shadow-sm focus:ring-gray-500 focus:border-gray-500" required>
+      </div>
+
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-300">Contraseña:</label>
+        <input type="password" id="password" name="password"
+               class="mt-1 block w-full px-3 py-2 bg-[#2a2a2a] border border-gray-600 rounded-md text-white shadow-sm focus:ring-gray-500 focus:border-gray-500" required>
+      </div>
+
+      <div class="flex justify-end">
+        <button type="submit"
+                class="bg-white text-black hover:bg-gray-200 px-4 py-2 rounded text-sm font-semibold shadow">
+          Actualizar
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function openNav() {
+      document.getElementById("myNav").style.width = "300px";
+      setTimeout(() => {
+        document.getElementById("sidebarForm").classList.remove("opacity-0");
+        document.getElementById("sidebarForm").classList.add("opacity-100");
+      }, 300);
+    }
+
+    function closeNav() {
+      document.getElementById("myNav").style.width = "0";
+      document.getElementById("sidebarForm").classList.remove("opacity-100");
+      document.getElementById("sidebarForm").classList.add("opacity-0");
+    }
+  </script>
+
+  <main class="pt-4">
+    {% block content %}{% endblock %}
+  </main>
+
+</body>
+</html>

@@ -18,3 +18,13 @@ class MovieRepository(ABC):
     @abstractmethod
     def search_by_genre(self, genre_id: str) -> List[Movie]:
         pass
+
+    # Nuevo método para buscar por actor
+    @abstractmethod
+    def search_by_actor(self, actor_name: str) -> List[Movie]:
+        pass
+    
+    # Nuevo método para buscar por año
+    @abstractmethod
+    def search_by_year(self, year: int) -> List[Movie]:
+        pass

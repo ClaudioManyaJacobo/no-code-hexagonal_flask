@@ -21,3 +21,19 @@ class MovieService:
     # clase search_by_genre para buscar películas por género
     def search_by_genre(self, genre_id: str) -> List[Movie]:
         return self.repository.search_by_genre(genre_id)
+    
+        # Nuevo método para buscar por actor
+    def search_by_actor(self, actor_name: str) -> List[Movie]:
+        if not actor_name:
+            return []
+        return self.repository.search_by_actor(actor_name)
+    
+    # Nuevo método para buscar por año
+    def search_by_year(self, year: int) -> List[Movie]:
+        try:
+            year_int = int(year)
+            if year_int < 1900 or year_int > 2100:
+                return []
+            return self.repository.search_by_year(year_int)
+        except (ValueError, TypeError):
+            return []
